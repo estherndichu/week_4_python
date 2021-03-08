@@ -37,3 +37,22 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
            
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    user_id = db.Column(db.String)
+    blog = db.Column(db.String)
+    comment = db.relationship('Comment', backref='post', lazy='dynamic')
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f"Post Title: {self.title}"
