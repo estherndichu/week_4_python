@@ -39,12 +39,12 @@ class User(UserMixin,db.Model):
            
 class Blog(db.Model):
     __tablename__ = 'blogs'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     user_id = db.Column(db.String)
     blog = db.Column(db.String)
-    comment = db.relationship('Comment', backref='post', lazy='dynamic')
+    comment = db.relationship('Comment', backref='blogs', lazy='dynamic')
 
     def save(self):
         db.session.add(self)
@@ -56,3 +56,9 @@ class Blog(db.Model):
 
     def __repr__(self):
         return f"Post Title: {self.title}"
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    comment = db.Column(db.Text())      
