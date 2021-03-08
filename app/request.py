@@ -8,24 +8,15 @@ def configure_request(app):
     base_url = app.config['QUOTE_API_BASE']
 
 def get_quote():
-    get_quote_url = base_url.format()
-
-    with urllib.request.urlopen(get_quote_url) as url:
+    with urllib.request.urlopen('http://quotes.stormconsultancy.co.uk/random.json') as url:
         get_quote_data = url.read()
         get_quote_response = json.loads(get_quote_data)
 
         quote_results = None
 
-        if get_quote_response['quotes']:
-            quote_results_list= get_quote_response['quotes']
-            quote_results = process_results(quote_results_list)
+        if get_quote_response:
+            author = get_quote_response.get('author')
+            quote = get_quote_response.get('quote')
+            quote_object = Quote(author,quote)
 
-    return quote_results    
-
-def process_results(quote_list):
-    quote_results = []
-    for quote_item in quote_list:
-        author = quote_item.get('author')
-        quote = quote_item.get('quote')
-
-    return quote_results    
+    return quote_object    

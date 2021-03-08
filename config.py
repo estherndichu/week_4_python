@@ -2,7 +2,7 @@ import os
 
 class Config:
 
-    QUOTE_API_BASE ='http://quotes.stormconsultancy.co.uk/quotes/'
+    QUOTE_API_BASE ='http://quotes.stormconsultancy.co.uk/random.json'
     SQLALCHEMY_TRACK_MODIFICATIONS=False
     
 class ProdConfig(Config):
