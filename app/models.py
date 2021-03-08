@@ -1,6 +1,5 @@
 from .import login_manager
 from . import db
-from werkzeug import generate_password_hash,check_password_hash
 from flask_login import UserMixin,current_user
 
 
