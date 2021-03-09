@@ -1,8 +1,14 @@
 import urllib.request,json
 from .models import Quote
 
+base_url = None
+
+def configure_request(app):
+    global base_url
+    base_url = app.config['BASE_URL']
+
 def get_quote():
-    with urllib.request.urlopen('http://quotes.stormconsultancy.co.uk/random.json') as url:
+    with urllib.request.urlopen(base_url) as url:
         get_quote_data = url.read()
         get_quote_response = json.loads(get_quote_data)
 
