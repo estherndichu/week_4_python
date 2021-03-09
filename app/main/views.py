@@ -61,27 +61,27 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form)     
 
-@main.route('/comment/<int:post_id>', methods=['GET', 'POST'])
+@main.route('/comment/<int:blog_id>', methods=['GET', 'POST'])
 @login_required
-def comment(post_id):
+def comment(blog_id):
 
     form = CommentForm()
-    blog = Blog.query.get(post_id)
+    blog = Blog.query.get(blog_id)
     user = User.query.all()
     comments = Comment.query.filter_by(blog_id=blog_id).all()
     if form.validate_on_submit():
         comment = form.comment.data
         blog_id = blog_id
         user_id = current_user._get_current_object().id
-        new_comment = Comment(
+        comment = Comment(
             comment=comment,
-            goal_id=goal_id,
+            blog_id=blog_id,
             user_id=user_id,
             )
 
-        new_comment.save()
-        new_comments = [new_comment]
-        print(new_comments)
+        comment.save()
+        comments = [comment]
+        print(comments)
         return redirect(url_for('.comment', blog_id=blog_id))
-    return render_template('comment.html', form=form, blog=blog, comments=comments, user=user)
+    return render_template('new_comment.html', form=form, blog=blog, comments=comments, user=user)
       
