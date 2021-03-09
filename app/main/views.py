@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for
 from . import main
 from ..request import get_quote
-from ..models import Quote,Blog,User
+from ..models import Quote,Blog,User,Comment
 from . forms import BlogForm,CommentForm,UpdateProfile
 from flask_login import login_required,current_user
 from .. import db
@@ -60,3 +60,28 @@ def update_profile(uname):
         return redirect(url_for('.profile',uname=user.username))
 
     return render_template('profile/update.html',form =form)     
+
+@main.route('/comment/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def comment(post_id):
+
+    form = CommentForm()
+    blog = Blog.query.get(post_id)
+    user = User.query.all()
+    comments = Comment.query.filter_by(blog_id=blog_id).all()
+    if form.validate_on_submit():
+        comment = form.comment.data
+        blog_id = blog_id
+        user_id = current_user._get_current_object().id
+        new_comment = Comment(
+            comment=comment,
+            goal_id=goal_id,
+            user_id=user_id,
+            )
+
+        new_comment.save()
+        new_comments = [new_comment]
+        print(new_comments)
+        return redirect(url_for('.comment', blog_id=blog_id))
+    return render_template('comment.html', form=form, blog=blog, comments=comments, user=user)
+      
