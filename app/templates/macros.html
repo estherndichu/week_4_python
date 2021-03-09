@@ -1,12 +1,15 @@
 {% macro display_blogs(blogs) %}
 
+
 <div class="card-columns">
     {% if blogs %} 
     {% for blog in blogs %}
-    <div class="card">
-        <div class="card-body" style="background-color:rgb(93, 212, 192)">
-            <p>Author: {{blog.title}}</p>
-            <p>Blog Post: {{blog.post}}</p>
+    <div class="container">
+        <div class="card">
+            <div class="card-body" style="background-color:rgb(93, 212, 192)">
+                <p>Author: {{blog.title}}</p>
+                <p>Blog Post: {{blog.blog}}</p>
+            </div>
         </div>
     </div>
     {% endfor %} 

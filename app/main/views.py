@@ -10,8 +10,9 @@ from .. import db
 def index():
 
     Quote = get_quote()
+    blogs = Blog.query.all()
 
-    return render_template('index.html',quote=Quote)
+    return render_template('index.html',quote=Quote,blogs=blogs)
 
 @main.route('/new_blog', methods=['GET', 'POST'])
 @login_required
@@ -27,6 +28,8 @@ def new_blog():
 
         blogpost = Blog(blog=blog, title=title, user_id=user_id)
         blogpost.save()
+
+        return redirect(url_for('main.index'))
         
     return render_template('new_blog.html', form=form) 
 
