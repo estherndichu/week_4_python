@@ -4,6 +4,7 @@ from ..request import get_quote
 from ..models import Quote
 from . forms import BlogForm
 from flask_login import login_required
+from .. import db
 
 @main.route('/')
 def index():
