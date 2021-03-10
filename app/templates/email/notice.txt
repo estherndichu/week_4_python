@@ -1,0 +1,2 @@
+Hello {{subscriber.username}}
+A new blog has been posted on Bloggiez. Visit the site to read it. Have a lovely day.

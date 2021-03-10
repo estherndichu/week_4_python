@@ -1,9 +1,10 @@
 from flask import render_template,redirect,url_for,flash,request
-from ..models import User
+from ..models import User,Blog,Subscriber
 from .forms import RegistrationForm,LoginForm
 from flask_login import login_user,logout_user,login_required,current_user
 from . import auth
 from .. import db
+from ..email import mail_message
 
 @auth.route('/register',methods = ["GET","POST"])
 def register():
@@ -36,3 +37,23 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("main.index"))
+
+@auth.route('/subscribe', methods=['GET','POST'])
+def subscriber():
+    subscriber_form = SubscriberForm()
+    if subscriber_form.validate_on_submit():
+
+        subscriber = Post.query.all()
+
+        blogs = Blog.query.all()
+
+        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+
+        db.session.add(subscriber)
+        db.session.commit()
+        title= "Bloggiez"
+       
+        return redirect(url_for('main.blog', title=title, blogs=blogs, subscriber_form=subscriber_form))
+
+
+    return render_template('subscribe.html',subscriber_form=subscriber_form) 

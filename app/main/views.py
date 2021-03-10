@@ -82,6 +82,8 @@ def comment(blog_id):
         comment.save()
         comments = [comment]
         print(comments)
-        return redirect(url_for('.comment', blog_id=blog_id))
+        return redirect(url_for('new_comment.html', blog_id=blog_id))
     return render_template('new_comment.html', form=form, blog=blog, comments=comments, user=user)
+
+
       
